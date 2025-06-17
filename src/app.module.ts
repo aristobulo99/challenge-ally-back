@@ -4,9 +4,12 @@ import { UserModule } from './modules/users/user.module';
 import { User } from './modules/users/domains/entity/user.entity';
 import { UserLoginsModule } from './modules/user-logins/user-logins.module';
 import { UserLogins } from './modules/user-logins/domains/entity/user-logins.entity';
+import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot(
       {
         type: 'mysql',
@@ -20,7 +23,8 @@ import { UserLogins } from './modules/user-logins/domains/entity/user-logins.ent
       }
     ),
     UserModule,
-    UserLoginsModule
+    UserLoginsModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

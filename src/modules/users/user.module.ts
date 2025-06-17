@@ -10,6 +10,6 @@ import { UserController } from './interfaces/controllers/user/user.controller';
     ],
     controllers: [UserController],
     providers: [UserService],
-    exports: []
+    exports: [UserService]
 })
 export class UserModule {}

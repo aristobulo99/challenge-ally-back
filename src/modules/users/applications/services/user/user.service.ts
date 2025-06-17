@@ -18,10 +18,6 @@ export class UserService {
         return bcrypt.hash(password, this.saltRounds);
     }
 
-    private async comparePassword(password: string, hash: string): Promise<boolean> {
-        return bcrypt.compare(password, hash);
-    }
-
     async getUserByEmail(email: string){
         return await this.userRepository.findOne(
             {
