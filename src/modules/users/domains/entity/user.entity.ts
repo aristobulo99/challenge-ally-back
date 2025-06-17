@@ -5,25 +5,25 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } f
 export class User {
 
     @PrimaryGeneratedColumn()
-    private id: number;
+    id: number;
 
     @Column()
-    private names: string;
+    names: string;
 
     @Column()
-    private lastNames: string;
+    lastNames: string;
 
     @Column()
-    private email: string;
+    email: string;
 
     @Column()
-    private password: string;
+    password: string;
 
     @CreateDateColumn()
-    private createDate: Date;
+    createDate: Date;
 
     @CreateDateColumn()
-    private updateDate: Date;
+    updateDate: Date;
 
     @OneToMany(() => UserLogins, (userLogins) => userLogins.user)
     userLogins: UserLogins[]

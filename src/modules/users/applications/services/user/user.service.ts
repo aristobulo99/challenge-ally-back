@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/modules/users/domains/entity/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from 'src/modules/users/interfaces/dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -13,11 +14,30 @@ export class UserService {
         @InjectRepository(User) private userRepository: Repository<User>
     ){}
 
-    async hashPassword(password: string): Promise<string> {
+    private async hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, this.saltRounds);
     }
 
-    async comparePassword(password: string, hash: string): Promise<boolean> {
+    private async comparePassword(password: string, hash: string): Promise<boolean> {
         return bcrypt.compare(password, hash);
+    }
+
+    async getUserByEmail(email: string){
+        return await this.userRepository.findOne(
+            {
+                where: {email}
+            }
+        )
+    }
+
+    async createUser(createUser: CreateUserDto){
+        const user: User | null = await this.getUserByEmail(createUser.email);
+
+        if(user){
+            throw new ConflictException('El correo electrónico del usuario ya está registrado')
+        }
+        createUser.password = await this.hashPassword(createUser.password)
+        const newUser = this.userRepository.create(createUser);
+        return await this.userRepository.save(newUser);
     }
 }
