@@ -2,6 +2,7 @@ import { ApiProperty, OmitType } from "@nestjs/swagger";
 import { CreateUserDto } from "./create-user.dto";
 import { IsNotEmpty, MinLength } from "class-validator";
 import { Expose } from "class-transformer";
+import { UserLoginsData } from "src/modules/user-logins/interfaces/dto/user-logins.dto";
 
 export class UserDto extends OmitType(CreateUserDto, ['password'] as const) {
 
@@ -25,4 +26,12 @@ export class UserDto extends OmitType(CreateUserDto, ['password'] as const) {
         example: 'Mon Jun 16 2025 21:15:28 GMT-0500 (hora estándar de Colombia)'
     })
     updateDate: Date;
+
+    @Expose()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: UserLoginsData
+    })
+    userLogins: UserLoginsData;
+    
 }

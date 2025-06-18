@@ -7,7 +7,7 @@ export class UserLogins {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @CreateDateColumn()
+    @Column()
     loginCreate: Date;
 
     @Column()

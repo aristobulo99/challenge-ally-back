@@ -15,7 +15,8 @@ export class UserLoginsService {
     async createUserLogins(ipAdress: string, user: User){
         const userLogins: CreateUserLogins = {
             ipAdress,
-            user
+            user,
+            loginCreate: new Date()
         }
 
         const newUserLogins: UserLogins = this.userLoginsRepository.create(userLogins);

@@ -16,4 +16,9 @@ export class CreateUserLogins {
     @IsNotEmpty()
     @ApiProperty()
     user: User;
+
+    @Expose()
+    @IsNotEmpty()
+    @ApiProperty()
+    loginCreate: Date;
 }

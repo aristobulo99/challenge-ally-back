@@ -19,10 +19,10 @@ export class User {
     @Column()
     password: string;
 
-    @CreateDateColumn()
+    @Column()
     createDate: Date;
 
-    @CreateDateColumn()
+    @Column()
     updateDate: Date;
 
     @OneToMany(() => UserLogins, (userLogins) => userLogins.user)
