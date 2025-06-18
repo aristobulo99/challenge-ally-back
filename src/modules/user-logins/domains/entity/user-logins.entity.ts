@@ -5,13 +5,13 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } f
 export class UserLogins {
     
     @PrimaryGeneratedColumn()
-    private id: number;
+    id: number;
 
     @CreateDateColumn()
-    private loginCreate: Date;
+    loginCreate: Date;
 
     @Column()
-    private ipAdress: string;
+    ipAdress: string;
 
     @ManyToOne(() => User, (user) => user.userLogins)
     user: User;
