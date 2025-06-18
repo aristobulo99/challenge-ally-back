@@ -38,6 +38,14 @@ export class UserService {
             .getOne();
     }
 
+    async getAllUsersWithLastLogin(){
+        return await this.userRepository
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.userLogins', 'userLogins')
+            .orderBy('userLogins.loginCreate', 'DESC')
+            .getMany();
+    }
+
     async createUser(createUser: CreateUserDto){
         const user: User | null = await this.getUserByEmail(createUser.email);
 
@@ -63,5 +71,16 @@ export class UserService {
 
         const userWithLastLogin = { ...user, userLogins: lastLoginDto };
         return plainToClass(UserDto, userWithLastLogin, {excludeExtraneousValues: true})
+    }
+
+    async findAllUset(){
+        const users: User[]  = await this.getAllUsersWithLastLogin();
+        return users.map<UserDto>(us => {
+            const [lastLogin] = us.userLogins ?? [];
+            const lastLoginDto = plainToClass(UserLoginsData, lastLogin, {excludeExtraneousValues: true,});
+
+            const userWithLastLogin = { ...us, userLogins: lastLoginDto };
+            return plainToClass(UserDto, userWithLastLogin, {excludeExtraneousValues: true})
+        })
     }
 }

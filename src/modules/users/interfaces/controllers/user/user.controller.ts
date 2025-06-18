@@ -26,4 +26,12 @@ export class UserController {
     async getUserByEmail(@Param('email') email: string){
         return await this.userService.findUserByEmail(email);
     }
+
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth('access-token')
+    @ApiOperation({summary: 'Obtiene una lista de todos los usuarios registrados que iniciaron sesión recientemente'})
+    @Get('/all-users')
+    async getAllUsers(){
+        return await this.userService.findAllUset();
+    }
 }
